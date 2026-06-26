@@ -276,7 +276,6 @@
   #view-timer .presets button{ background:#0369a1; font-size:13px; padding:7px 12px; border:none; border-radius:8px; color:#fff; cursor:pointer; }
   #view-timer .back-btn{ color:#7dd3fc; }
   #timer_errBox{ color:#fca5a5; font-size:13px; margin-top:10px; white-space:pre-wrap; }
-  #timer_saveMsg{ color:#bae6fd; max-width:380px; text-align:center; }
 
   /* ===== RPS (가위바위보) ===== */
   #view-rps{
@@ -620,6 +619,13 @@
     font-size:24px; display:flex; align-items:center; justify-content:center;
   }
   .mb-emoji.picked-mb{ border-color:#06b6d4; background:#cffafe; }
+  .mb-number-row{ display:flex; gap:6px; flex-wrap:wrap; max-width:480px; justify-content:center; }
+  .mb-number{
+    width:44px; height:38px; border-radius:8px; border:2px solid #cffafe; background:#f0fdff; cursor:pointer;
+    font-size:11px; font-weight:bold; display:flex; align-items:center; justify-content:center; color:#0e7490;
+    white-space:nowrap; padding:0;
+  }
+  .mb-number.picked-mb{ border-color:#06b6d4; background:#06b6d4; color:#fff; }
   #mb_addBtn{
     border:none; border-radius:10px; background:#06b6d4; color:#fff; font-weight:bold; padding:11px 22px;
     cursor:pointer; font-size:14px; margin-bottom:18px;
@@ -631,6 +637,40 @@
   }
   .mb-sticker .mb-emojis{ font-size:22px; }
   #view-moodboard .back-btn{ color:#0e7490; background:rgba(255,255,255,0.6); margin-top:18px; }
+
+  /* ===== 고학년용: 오늘 감정 스티커판 ===== */
+  #view-moodboard-hi{
+    background:#eef2ff; color:#3730a3; flex-direction:column; align-items:center; padding:24px;
+  }
+  #view-moodboard-hi.active{ display:flex; }
+  #view-moodboard-hi h1{ margin:0 0 4px; font-size:24px; }
+  #view-moodboard-hi .sub{ margin:0 0 16px; color:#4338ca; font-size:14px; text-align:center; }
+  #mh_infoRow{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:14px; }
+  #mh_infoRow input, #mh_infoRow select{
+    padding:9px 10px; border-radius:10px; border:1px solid #c7d2fe; font-size:13px; text-align:center;
+  }
+  #mh_infoRow select{ width:84px; }
+  #mh_infoRow input[type="text"]{ width:120px; }
+  #mh_pickers{ display:flex; gap:24px; flex-wrap:wrap; justify-content:center; margin-bottom:14px; }
+  #mh_sentenceBox{ display:flex; flex-direction:column; gap:8px; max-width:460px; width:100%; margin-bottom:16px; }
+  #mh_sentenceBox .mh-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
+  #mh_sentenceBox label{ font-size:13px; color:#3730a3; font-weight:bold; }
+  #mh_sentenceBox input[type="text"]{
+    flex:1; min-width:160px; padding:9px 10px; border-radius:10px; border:1px solid #c7d2fe; font-size:13px;
+  }
+  #mh_addBtn{
+    border:none; border-radius:10px; background:#4f46e5; color:#fff; font-weight:bold; padding:11px 22px;
+    cursor:pointer; font-size:14px; margin-bottom:18px;
+  }
+  #mh_board{ display:flex; flex-wrap:wrap; gap:10px; max-width:640px; justify-content:center; min-height:60px; }
+  .mh-sticker{
+    background:#fff; border-radius:12px; padding:10px 14px; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    display:flex; flex-direction:column; align-items:center; gap:4px; max-width:220px; text-align:center;
+  }
+  .mh-sticker .mh-emojis{ font-size:22px; }
+  .mh-sticker .mh-meta{ font-size:11px; color:#6366f1; }
+  .mh-sticker .mh-sentence{ font-size:12.5px; color:#3730a3; }
+  #view-moodboard-hi .back-btn{ color:#3730a3; background:rgba(255,255,255,0.6); margin-top:18px; }
 
   /* ===== KINDER: 손씻기 타이머 ===== */
   #view-handwash{
@@ -924,8 +964,14 @@
         </button>
         <button class="card card-sync" onclick="showView('view-moodboard')">
           <span class="icon">🌈</span>
-          <h3>오늘 기분 스티커판</h3>
+          <h3>오늘 기분 스티커판 (저학년용)</h3>
           <p>오늘의 날씨와 기분 이모지를 골라 출석판에 스티커로 붙이는 유아용 웹앱</p>
+          <span class="badge">웹앱</span>
+        </button>
+        <button class="card card-sync" onclick="showView('view-moodboard-hi')">
+          <span class="icon">📝</span>
+          <h3>오늘 감정 스티커판 (고학년용)</h3>
+          <p>학년·반·번호·이름을 입력하고 오늘의 감정과 이유를 문장으로 적어보는 고학년용 웹앱</p>
           <span class="badge">웹앱</span>
         </button>
       </div>
@@ -1052,11 +1098,6 @@
     <button class="ctrl secondary" id="timer_resetBtn">초기화</button>
   </div>
   <div id="timer_errBox"></div>
-  <div class="save-row">
-    <button class="save-btn" id="timer_saveBtn">💾 저장</button>
-    <button class="save-btn sheets" id="timer_sheetsBtn">📤 구글시트 연동</button>
-  </div>
-  <div class="save-msg" id="timer_saveMsg"></div>
   <button class="back-btn" onclick="showView('view-home')">← 허브로 돌아가기</button>
 </div>
 
@@ -1385,8 +1426,12 @@
 
 <!-- ===================== KINDER: 오늘 기분 스티커판 ===================== -->
 <div class="view" id="view-moodboard">
-  <h1>🌈 오늘 기분 스티커판</h1>
+  <h1>🌈 오늘 기분 스티커판 (저학년용)</h1>
   <p class="sub">오늘의 날씨와 기분을 골라 스티커판에 붙여보세요.</p>
+  <div class="mb-group" style="margin-bottom:14px;">
+    <h4>내 번호</h4>
+    <div id="mb_numberRow" class="mb-number-row"></div>
+  </div>
   <div id="mb_pickers">
     <div class="mb-group">
       <h4>오늘의 날씨</h4>
@@ -1408,6 +1453,58 @@
     <p style="margin:0 0 10px; font-weight:bold;">배포된 Apps Script 웹앱 URL 입력</p>
     <input type="text" id="mb_sheetsUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%; padding:8px; border-radius:8px; border:1px solid #67e8f9; margin-bottom:8px; font-size:12px;">
     <button id="mb_sheetsUrlSaveBtn" style="width:100%; padding:9px; border:none; border-radius:8px; background:#0891b2; color:#fff; cursor:pointer; font-size:13px;">URL 저장</button>
+  </div>
+  <button class="back-btn" onclick="showView('view-home')">← 허브로 돌아가기</button>
+</div>
+
+<!-- ===================== 고학년용: 오늘 감정 스티커판 ===================== -->
+<div class="view" id="view-moodboard-hi">
+  <h1>📝 오늘 감정 스티커판 (고학년용)</h1>
+  <p class="sub">학년·반·번호·이름을 입력하고, 오늘의 감정과 이유를 문장으로 적어보세요.</p>
+  <div id="mh_infoRow">
+    <select id="mh_gradeSelect">
+      <option value="">학년</option>
+    </select>
+    <select id="mh_classSelect">
+      <option value="">반</option>
+    </select>
+    <select id="mh_numberSelect">
+      <option value="">번호</option>
+    </select>
+    <input type="text" id="mh_nameInput" placeholder="이름">
+  </div>
+  <div id="mh_pickers">
+    <div class="mb-group">
+      <h4>오늘의 날씨</h4>
+      <div class="mb-emoji-row" id="mh_weatherRow"></div>
+    </div>
+    <div class="mb-group">
+      <h4>오늘의 기분</h4>
+      <div class="mb-emoji-row" id="mh_moodRow"></div>
+    </div>
+  </div>
+  <div id="mh_sentenceBox">
+    <div class="mh-row">
+      <label>오늘 감정은</label>
+      <input type="text" id="mh_feelingInput" placeholder="예: 신난다, 속상하다">
+      <label>하다.</label>
+    </div>
+    <div class="mh-row">
+      <label>왜냐하면</label>
+      <input type="text" id="mh_reasonInput" placeholder="이유를 적어주세요">
+    </div>
+  </div>
+  <button id="mh_addBtn">스티커 붙이기</button>
+  <div id="mh_board"></div>
+  <div class="save-row">
+    <button class="save-btn sheets" id="mh_sheetsBtn">📤 구글시트 연동</button>
+    <button class="save-btn" id="mh_sheetsSetupBtn" style="background:#64748b;">⚙️ 연동 설정</button>
+  </div>
+  <div class="save-msg" id="mh_saveMsg"></div>
+  <div id="mh_sheetsSetupBox" style="display:none; max-width:480px; margin-top:14px; background:#fff; border:1px solid #c7d2fe; border-radius:12px; padding:16px; text-align:left; font-size:13px; color:#3730a3;">
+    <p style="margin:0 0 10px; font-weight:bold;">배포된 Apps Script 웹앱 URL 입력</p>
+    <input type="text" id="mh_sheetsUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%; padding:8px; border-radius:8px; border:1px solid #c7d2fe; margin-bottom:8px; font-size:12px;">
+    <button id="mh_sheetsUrlSaveBtn" style="width:100%; padding:9px; border:none; border-radius:8px; background:#4f46e5; color:#fff; cursor:pointer; font-size:13px;">URL 저장</button>
   </div>
   <button class="back-btn" onclick="showView('view-home')">← 허브로 돌아가기</button>
 </div>
@@ -1890,20 +1987,6 @@ function demoSave(msgEl, kind, summary) {
         render();
       });
     });
-
-    var saveMsg = document.getElementById('timer_saveMsg');
-    var saveBtn = document.getElementById('timer_saveBtn');
-    var sheetsBtn = document.getElementById('timer_sheetsBtn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function () {
-        demoSave(saveMsg, 'save', '남은 시간 ' + format(remaining));
-      });
-    }
-    if (sheetsBtn) {
-      sheetsBtn.addEventListener('click', function () {
-        demoSave(saveMsg, 'sheets', '남은 시간 ' + format(remaining));
-      });
-    }
 
     render();
   } catch (e) {
@@ -3398,11 +3481,14 @@ function demoSave(msgEl, kind, summary) {
   try {
     var weathers = ['☀️', '☁️', '🌧️', '⛄'];
     var moods = ['😊', '😢', '😆', '😴', '😡'];
+    var numberRow = document.getElementById('mb_numberRow');
     var weatherRow = document.getElementById('mb_weatherRow');
     var moodRow = document.getElementById('mb_moodRow');
     var board = document.getElementById('mb_board');
     var pickedWeather = null, pickedMood = null;
     var STORAGE_KEY = 'mb_stickers_demo';
+    var numbers = [];
+    for (var ni = 1; ni <= 27; ni++) { numbers.push(String(ni)); }
 
     function loadStickers() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { return []; }
@@ -3411,21 +3497,21 @@ function demoSave(msgEl, kind, summary) {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (e) { /* ignore */ }
     }
 
-    function renderRow(rowEl, list, onPick, pickedRef) {
+    function renderRow(rowEl, list, onPick, pickedRef, className, labelFn) {
       rowEl.innerHTML = '';
-      list.forEach(function (emo) {
+      list.forEach(function (item) {
         var btn = document.createElement('button');
-        btn.className = 'mb-emoji' + (pickedRef.value === emo ? ' picked-mb' : '');
-        btn.textContent = emo;
+        btn.className = className + (pickedRef.value === item ? ' picked-mb' : '');
+        btn.textContent = labelFn ? labelFn(item) : item;
         btn.addEventListener('click', function () {
-          pickedRef.value = emo;
+          pickedRef.value = item;
           onPick();
         });
         rowEl.appendChild(btn);
       });
     }
 
-    var weatherRef = { value: null }, moodRef = { value: null };
+    var weatherRef = { value: null }, moodRef = { value: null }, numberRef = { value: null };
 
     function renderBoard() {
       var stickers = loadStickers();
@@ -3437,24 +3523,31 @@ function demoSave(msgEl, kind, summary) {
       stickers.slice().reverse().forEach(function (s) {
         var div = document.createElement('div');
         div.className = 'mb-sticker';
-        div.innerHTML = '<span class="mb-emojis">' + s.weather + ' ' + s.mood + '</span><span>' + s.date + '</span>';
+        div.innerHTML = '<span class="mb-emojis">' + s.weather + ' ' + s.mood + '</span><span>' + (s.number ? s.number + '번 · ' : '') + s.date + '</span>';
         board.appendChild(div);
       });
     }
 
-    function renderWeatherRow() { renderRow(weatherRow, weathers, renderWeatherRow, weatherRef); }
-    function renderMoodRow() { renderRow(moodRow, moods, renderMoodRow, moodRef); }
+    function renderWeatherRow() { renderRow(weatherRow, weathers, renderWeatherRow, weatherRef, 'mb-emoji'); }
+    function renderMoodRow() { renderRow(moodRow, moods, renderMoodRow, moodRef, 'mb-emoji'); }
+    function renderNumberRow() { renderRow(numberRow, numbers, renderNumberRow, numberRef, 'mb-number', function (n) { return n + '번'; }); }
     renderWeatherRow();
     renderMoodRow();
+    renderNumberRow();
 
     document.getElementById('mb_addBtn').addEventListener('click', function () {
+      var number = numberRef.value;
+      if (!number) {
+        alert('번호를 선택해주세요!');
+        return;
+      }
       if (!weatherRef.value || !moodRef.value) {
         alert('날씨와 기분을 모두 선택해주세요!');
         return;
       }
       var stickers = loadStickers();
       var now = new Date();
-      stickers.push({ weather: weatherRef.value, mood: moodRef.value, date: (now.getMonth() + 1) + '/' + now.getDate() });
+      stickers.push({ number: number, weather: weatherRef.value, mood: moodRef.value, date: (now.getMonth() + 1) + '/' + now.getDate() });
       saveStickers(stickers);
       renderBoard();
     });
@@ -3524,6 +3617,195 @@ function demoSave(msgEl, kind, summary) {
     }
   } catch (e) {
     console.error('moodboard module error', e);
+  }
+})();
+
+/* ===================== 고학년용: 오늘 감정 스티커판 ===================== */
+(function () {
+  try {
+    var weathers = ['☀️', '☁️', '🌧️', '⛄'];
+    var moods = ['😊', '😢', '😆', '😴', '😡'];
+    var gradeSelect = document.getElementById('mh_gradeSelect');
+    var classSelect = document.getElementById('mh_classSelect');
+    var numberSelect = document.getElementById('mh_numberSelect');
+    var nameInput = document.getElementById('mh_nameInput');
+    var feelingInput = document.getElementById('mh_feelingInput');
+    var reasonInput = document.getElementById('mh_reasonInput');
+    var weatherRow = document.getElementById('mh_weatherRow');
+    var moodRow = document.getElementById('mh_moodRow');
+    var board = document.getElementById('mh_board');
+    var STORAGE_KEY = 'mh_stickers_demo';
+
+    if (gradeSelect) {
+      for (var gi = 1; gi <= 6; gi++) {
+        var go = document.createElement('option');
+        go.value = String(gi);
+        go.textContent = gi + '학년';
+        gradeSelect.appendChild(go);
+      }
+    }
+    if (classSelect) {
+      for (var ci = 1; ci <= 12; ci++) {
+        var co = document.createElement('option');
+        co.value = String(ci);
+        co.textContent = ci + '반';
+        classSelect.appendChild(co);
+      }
+    }
+    if (numberSelect) {
+      for (var ni = 1; ni <= 27; ni++) {
+        var no = document.createElement('option');
+        no.value = String(ni);
+        no.textContent = ni + '번';
+        numberSelect.appendChild(no);
+      }
+    }
+
+    function loadStickers() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function saveStickers(arr) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (e) { /* ignore */ }
+    }
+
+    function renderRow(rowEl, list, onPick, pickedRef) {
+      rowEl.innerHTML = '';
+      list.forEach(function (emo) {
+        var btn = document.createElement('button');
+        btn.className = 'mb-emoji' + (pickedRef.value === emo ? ' picked-mb' : '');
+        btn.textContent = emo;
+        btn.addEventListener('click', function () {
+          pickedRef.value = emo;
+          onPick();
+        });
+        rowEl.appendChild(btn);
+      });
+    }
+
+    var weatherRef = { value: null }, moodRef = { value: null };
+
+    function renderBoard() {
+      var stickers = loadStickers();
+      board.innerHTML = '';
+      if (stickers.length === 0) {
+        board.innerHTML = '<span style="font-size:13px;color:#4338ca;">아직 붙인 스티커가 없어요.</span>';
+        return;
+      }
+      stickers.slice().reverse().forEach(function (s) {
+        var div = document.createElement('div');
+        div.className = 'mh-sticker';
+        var meta = (s.grade ? s.grade + '학년 ' : '') + (s.classNum ? s.classNum + '반 ' : '') + (s.number ? s.number + '번 ' : '') + (s.name || '');
+        div.innerHTML =
+          '<span class="mh-emojis">' + s.weather + ' ' + s.mood + '</span>' +
+          '<span class="mh-meta">' + meta + ' · ' + s.date + '</span>' +
+          '<span class="mh-sentence">오늘 감정은 ' + s.feeling + ' 하다.<br>왜냐하면 ' + s.reason + '</span>';
+        board.appendChild(div);
+      });
+    }
+
+    function renderWeatherRow() { renderRow(weatherRow, weathers, renderWeatherRow, weatherRef); }
+    function renderMoodRow() { renderRow(moodRow, moods, renderMoodRow, moodRef); }
+    renderWeatherRow();
+    renderMoodRow();
+
+    document.getElementById('mh_addBtn').addEventListener('click', function () {
+      var grade = gradeSelect ? gradeSelect.value : '';
+      var classNum = classSelect ? classSelect.value : '';
+      var number = numberSelect ? numberSelect.value : '';
+      var name = nameInput ? nameInput.value.trim() : '';
+      var feeling = feelingInput ? feelingInput.value.trim() : '';
+      var reason = reasonInput ? reasonInput.value.trim() : '';
+      if (!grade || !classNum || !number || !name) {
+        alert('학년·반·번호·이름을 모두 입력해주세요!');
+        return;
+      }
+      if (!weatherRef.value || !moodRef.value) {
+        alert('날씨와 기분을 모두 선택해주세요!');
+        return;
+      }
+      if (!feeling || !reason) {
+        alert('오늘 감정과 이유를 모두 적어주세요!');
+        return;
+      }
+      var stickers = loadStickers();
+      var now = new Date();
+      stickers.push({
+        grade: grade, classNum: classNum, number: number, name: name,
+        weather: weatherRef.value, mood: moodRef.value,
+        feeling: feeling, reason: reason,
+        date: (now.getMonth() + 1) + '/' + now.getDate()
+      });
+      saveStickers(stickers);
+      renderBoard();
+      if (feelingInput) { feelingInput.value = ''; }
+      if (reasonInput) { reasonInput.value = ''; }
+    });
+
+    renderBoard();
+
+    var saveMsg = document.getElementById('mh_saveMsg');
+    var sheetsBtn = document.getElementById('mh_sheetsBtn');
+    var setupBtn = document.getElementById('mh_sheetsSetupBtn');
+    var setupBox = document.getElementById('mh_sheetsSetupBox');
+    var urlInput = document.getElementById('mh_sheetsUrlInput');
+    var urlSaveBtn = document.getElementById('mh_sheetsUrlSaveBtn');
+    var SHEETS_URL_KEY = 'vch_moodboard_hi_sheets_url';
+
+    function showMsg(text) {
+      if (!saveMsg) { return; }
+      saveMsg.textContent = text;
+      saveMsg.classList.add('show');
+      clearTimeout(saveMsg._hideTimer);
+      saveMsg._hideTimer = setTimeout(function () { saveMsg.classList.remove('show'); }, 5000);
+    }
+
+    try { urlInput.value = localStorage.getItem(SHEETS_URL_KEY) || ''; } catch (e) {}
+
+    if (setupBtn) {
+      setupBtn.addEventListener('click', function () {
+        setupBox.style.display = setupBox.style.display === 'none' ? 'block' : 'none';
+      });
+    }
+
+    if (urlSaveBtn) {
+      urlSaveBtn.addEventListener('click', function () {
+        var url = urlInput.value.trim();
+        if (!url) { return; }
+        try { localStorage.setItem(SHEETS_URL_KEY, url); } catch (e) {}
+        showMsg('✅ 구글시트 연동 URL이 저장되었습니다. 이제 "구글시트 연동" 버튼을 눌러 전송해보세요.');
+      });
+    }
+
+    if (sheetsBtn) {
+      sheetsBtn.addEventListener('click', function () {
+        var url = '';
+        try { url = localStorage.getItem(SHEETS_URL_KEY) || ''; } catch (e) {}
+        if (!url) {
+          showMsg('⚠️ 먼저 "⚙️ 연동 설정"에서 구글 Apps Script 웹앱 URL을 등록해주세요.');
+          return;
+        }
+        var stickers = loadStickers();
+        if (!stickers.length) {
+          showMsg('⚠️ 보낼 스티커가 없습니다. 먼저 스티커를 붙여주세요.');
+          return;
+        }
+        var now = new Date();
+        var payload = { date: now.toLocaleString(), stickers: stickers };
+        showMsg('📤 전송 중...');
+        fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).then(function () {
+          showMsg('📤 전송 완료! (no-cors 방식이라 응답 확인은 안 되니, 구글시트를 직접 열어 데이터가 들어왔는지 확인해주세요.)');
+        }).catch(function (err) {
+          showMsg('❌ 전송 실패: ' + err.message + ' (URL이 올바른지, 배포 권한이 "모든 사용자"인지 확인해주세요.)');
+        });
+      });
+    }
+  } catch (e) {
+    console.error('moodboard-hi module error', e);
   }
 })();
 
